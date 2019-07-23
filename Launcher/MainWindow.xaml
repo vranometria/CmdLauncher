@@ -1,0 +1,15 @@
+﻿<Window x:Class="Launcher.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Launcher"
+        mc:Ignorable="d"
+        Title="Launcher" Height="81.442" Width="303.067">
+    <Grid>
+        <Grid Margin="0,0,-0.4,0">
+            <TextBox x:Name="Keyword" Margin="10" TextWrapping="Wrap" Text="" TextChanged="Keyword_TextChanged"/>
+        </Grid>
+
+    </Grid>
+</Window>

@@ -9,9 +9,8 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using Launcher.View;
+using Launcher.Model;
 
 namespace Launcher
 {
@@ -20,21 +19,67 @@ namespace Launcher
     /// </summary>
     public partial class MainWindow : Window
     {
-        private CandidateWindow candidateWindow = new CandidateWindow();
+        private List<CandidateItemView> candidateItemViews = new List<CandidateItemView>();
 
         public MainWindow()
         {
             InitializeComponent();
 
-            candidateWindow.Left = Left + Width;
-            candidateWindow.Top = Top;
-            candidateWindow.Visibility = Visibility.Visible;
+            mock_data();
+        }
+
+        private void mock_data()
+        {
+            CandidateItemView view;
+            List<CandidateItemView> views = new List<CandidateItemView>();
+
+            view = new CandidateItemView(new CandidateItem() { Keyword = "abondom" });
+            views.Add(view);
+
+            view = new CandidateItemView(new CandidateItem() { Keyword = "amp" });
+            views.Add(view);
+
+            view = new CandidateItemView(new CandidateItem() { Keyword = "archer" });
+            views.Add(view);
+
+            view = new CandidateItemView(new CandidateItem() { Keyword = "banana" });
+            views.Add(view);
+
+            candidateItemViews = views;
         }
 
         private void Keyword_TextChanged(object sender, TextChangedEventArgs e)
         {
             var keyword = Keyword.Text;
-            candidateWindow.ShowCandidate(keyword);
+            ShowCandidate(keyword);
         }
+
+        internal void ShowCandidate(string keyword)
+        {
+            CandidateList.Items.Clear();
+
+            if (string.IsNullOrWhiteSpace(keyword))
+            {
+                CandidateViewArea.Visibility = Visibility.Hidden;
+                return;
+            }
+
+            candidateItemViews.Where(x => x.Item.Keyword.StartsWith(keyword)).ToList().ForEach(x => CandidateList.Items.Add(x));
+
+            if (CandidateList.Items.Count == 0)
+            {
+                CandidateViewArea.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                CandidateList.SelectedIndex = 0;
+                CandidateViewArea.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void Keyword_KeyDown(object sender, KeyEventArgs e)
+        {
+        }
+
     }
 }

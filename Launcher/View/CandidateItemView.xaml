@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Launcher.View"
-             mc:Ignorable="d" d:DesignWidth="800" Height="58">
+             mc:Ignorable="d" d:DesignWidth="800" Height="58" IsTabStop="False">
     <Grid>
         <Label x:Name="Keyword" Content="Label" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="800"/>
         <Label x:Name="FilePass" Content="Label" Margin="0,29,0,-0.4"/>

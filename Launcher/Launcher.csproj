@@ -59,9 +59,6 @@
     <Compile Include="View\CandidateItemView.xaml.cs">
       <DependentUpon>CandidateItemView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\CandidateWindow.xaml.cs">
-      <DependentUpon>CandidateWindow.xaml</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -75,10 +72,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\CandidateItemView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\CandidateWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

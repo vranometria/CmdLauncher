@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Launcher"
         mc:Ignorable="d"
-        Title="Launcher" SizeToContent="WidthAndHeight">
+        Title="Launcher" SizeToContent="WidthAndHeight" Width="278.4" KeyDown="Window_KeyDown" DragEnter="Window_DragEnter" Drop="Window_Drop" AllowDrop="True">
     <Grid>
         <Grid Margin="0,0,-0.4,0" RenderTransformOrigin="0.5,0.5">
             <Grid.RenderTransform>
@@ -16,7 +16,7 @@
                     <TranslateTransform/>
                 </TransformGroup>
             </Grid.RenderTransform>
-            <TextBox x:Name="Keyword" Margin="0,10,-0.4,0" TextWrapping="Wrap" Text="" TextChanged="Keyword_TextChanged" HorizontalAlignment="Left" Width="436" Height="21" VerticalAlignment="Top" KeyDown="Keyword_KeyDown"/>
+            <TextBox x:Name="Keyword" Margin="0,10,0,0" TextWrapping="Wrap" Text="" TextChanged="Keyword_TextChanged" HorizontalAlignment="Left" Width="261" Height="21" VerticalAlignment="Top" KeyDown="Keyword_KeyDown"/>
             <Grid x:Name="CandidateViewArea" Margin="10,50,10.6,9.8">
                 <ListBox x:Name="CandidateList" Margin="0,-10,0.6,10.2" IsTabStop="False" />
             </Grid>

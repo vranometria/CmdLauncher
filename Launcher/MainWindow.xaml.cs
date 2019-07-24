@@ -19,7 +19,9 @@ namespace Launcher
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<CandidateItemView> candidateItemViews = new List<CandidateItemView>();
+        private SettingWindow settingWindow = new SettingWindow() { Visibility = Visibility.Hidden };
+
+        private ShortcutData shortcutData = ShortcutData.Instance;
 
         public MainWindow()
         {
@@ -30,22 +32,20 @@ namespace Launcher
 
         private void mock_data()
         {
-            CandidateItemView view;
-            List<CandidateItemView> views = new List<CandidateItemView>();
+            CandidateItem item;
 
-            view = new CandidateItemView(new CandidateItem() { Keyword = "abondom" });
-            views.Add(view);
+            item = new CandidateItem() { Keyword = "abondom" };
+            shortcutData.Add(item);
 
-            view = new CandidateItemView(new CandidateItem() { Keyword = "amp" });
-            views.Add(view);
+            item = new CandidateItem() { Keyword = "amp" };
+            shortcutData.Add(item);
 
-            view = new CandidateItemView(new CandidateItem() { Keyword = "archer" });
-            views.Add(view);
+            item = new CandidateItem() { Keyword = "archer" };
+            shortcutData.Add(item);
 
-            view = new CandidateItemView(new CandidateItem() { Keyword = "banana" });
-            views.Add(view);
+            item = new CandidateItem() { Keyword = "banana" };
+            shortcutData.Add(item);
 
-            candidateItemViews = views;
         }
 
         private void Keyword_TextChanged(object sender, TextChangedEventArgs e)
@@ -64,7 +64,7 @@ namespace Launcher
                 return;
             }
 
-            candidateItemViews.Where(x => x.Item.Keyword.StartsWith(keyword)).ToList().ForEach(x => CandidateList.Items.Add(x));
+            shortcutData.StartWith(keyword).ForEach(x => CandidateList.Items.Add(x));
 
             if (CandidateList.Items.Count == 0)
             {
@@ -77,9 +77,63 @@ namespace Launcher
             }
         }
 
-        private void Keyword_KeyDown(object sender, KeyEventArgs e)
-        {
+        private void Decide() {
+            if (CandidateList.Items.Count == 0) {
+                Hide();
+                return;
+            }
+
+            var view = CandidateList.SelectedItem as CandidateItemView;
+
+            if (view == null) {
+                Hide();
+                return;
+            }
+
+
+            Util.Execute(view.Item.Filepath,view.Item.Application);
+            Hide();
         }
 
+        private void Keyword_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key) {
+                case Key.Enter:
+                    Decide();
+                    break;
+            }
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.F1:
+                    if (settingWindow.Visibility != Visibility.Visible) {
+                        settingWindow.Visibility = Visibility.Visible;
+                    }
+                    break;
+            }
+        }
+
+        private void Window_PreviewDragEnter(object sender, DragEventArgs e)
+        {
+            e.Effects = DragDropEffects.All;
+        }
+
+        private void Window_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effects = DragDropEffects.All;
+        }
+
+        private void Window_Drop(object sender, DragEventArgs e)
+        {
+            var files = e.Data.GetData(DataFormats.FileDrop) as string[];
+
+            settingWindow.ShowShortcutAddition(file:files[0]);
+            if (settingWindow.Visibility != Visibility.Visible) {
+                settingWindow.Visibility = Visibility.Visible;
+            }
+        }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Launcher"
         mc:Ignorable="d"
-        Title="Launcher" SizeToContent="WidthAndHeight" Width="278.4" KeyDown="Window_KeyDown" DragEnter="Window_DragEnter" Drop="Window_Drop" AllowDrop="True">
+        Title="Launcher" SizeToContent="WidthAndHeight" Width="278.4" KeyDown="Window_KeyDown" DragEnter="Window_DragEnter" Drop="Window_Drop" AllowDrop="True" Closing="Window_Closing">
     <Grid>
         <Grid Margin="0,0,-0.4,0" RenderTransformOrigin="0.5,0.5">
             <Grid.RenderTransform>

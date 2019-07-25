@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
+using Launcher.Model;
+using Launcher.View;
 
 namespace Launcher
 {
@@ -38,6 +40,20 @@ namespace Launcher
 
             throw new Exception();
 
+        }
+
+        public static List<CandidateItemView> ConvertData(dynamic readData) {
+            List<CandidateItemView> views = new List<CandidateItemView>();
+            foreach (dynamic record in readData.data) {
+                var model = new CandidateItem()
+                {
+                    Keyword = record.Keyword,
+                    Filepath = record.Filepath,
+                    Application = record.Application
+                };
+                views.Add(new CandidateItemView(model));
+            }
+            return views;
         }
     }
 }

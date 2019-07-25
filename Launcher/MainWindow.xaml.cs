@@ -135,5 +135,10 @@ namespace Launcher
                 settingWindow.Visibility = Visibility.Visible;
             }
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            shortcutData.Save();
+        }
     }
 }

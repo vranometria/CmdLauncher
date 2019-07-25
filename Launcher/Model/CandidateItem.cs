@@ -12,7 +12,6 @@ namespace Launcher.Model
 
         public string Filepath { get; set; }
 
-
         public string Application { get; set; }
     }
 }

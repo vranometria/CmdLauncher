@@ -5,6 +5,8 @@ using System.Text;
 using System.Diagnostics;
 using Launcher.Model;
 using Launcher.View;
+using System.Windows.Input;
+using Launcher.Hotkey;
 
 namespace Launcher
 {
@@ -54,6 +56,31 @@ namespace Launcher
                 views.Add(new CandidateItemView(model));
             }
             return views;
+        }
+
+        public static bool RegisterHotkey(LauncherHotkey hotkey, Key key, bool alt, bool ctrl) {
+
+            ModifierKeys modifierKey = ModifierKeys.None;
+
+            if (alt)
+            {
+                modifierKey = modifierKey == ModifierKeys.None ? ModifierKeys.Alt : modifierKey | ModifierKeys.Alt;
+            }
+
+            if (ctrl)
+            {
+                modifierKey = modifierKey == ModifierKeys.None ? ModifierKeys.Control : modifierKey | ModifierKeys.Control;
+            }
+
+            return hotkey.Register(modifierKey, key);
+        }
+
+        public static Key Parse(string key) {
+            if (string.IsNullOrEmpty(key)) {
+                return Key.None;
+            }
+
+            return (Key)Enum.Parse(typeof(Key), key);
         }
     }
 }

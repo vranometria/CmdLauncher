@@ -9,7 +9,17 @@
     <Grid>
         <TabControl x:Name="Tab" Margin="10,10,9.6,48">
             <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="#FFE5E5E5">
+                    <Grid HorizontalAlignment="Left" Height="103" Margin="24,40,0,0" VerticalAlignment="Top" Width="262">
+                        <TextBox x:Name="HotkeySelector" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53" KeyDown="HotkeySelector_KeyDown"/>
+                        <Grid HorizontalAlignment="Left" Height="54" Margin="10,38,0,0" VerticalAlignment="Top" Width="127" RenderTransformOrigin="-0.034,0.385">
+                            <CheckBox x:Name="ModkeyAlt" Content="Alt" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                            <CheckBox x:Name="ModkeyCtrl" Content="Control" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top"/>
+                        </Grid>
+                        <Button x:Name="HotkeyApplyer" Content="Apply" Margin="0,0,10,10" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="HotkeyApplyer_Click"/>
+                        <Label x:Name="HotkeyResisterResult" Content="" HorizontalAlignment="Left" Margin="127,7,0,0" VerticalAlignment="Top"/>
+                    </Grid>
+                </Grid>
             </TabItem>
             <TabItem Header="TabItem">
                 <Grid Background="#FFE5E5E5">

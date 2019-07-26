@@ -8,8 +8,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace Launcher
@@ -21,9 +19,29 @@ namespace Launcher
     {
         private ShortcutData shortcutData = ShortcutData.Instance;
 
+        private MainWindow mainWindow;
+
         public SettingWindow()
         {
             InitializeComponent();
+        }
+
+        public SettingWindow(MainWindow mainWindow) : this() {
+            this.mainWindow = mainWindow;
+
+            Init();
+        }
+
+        private void Init() {
+            AppConfig config = AppConfig.Instance;
+            if (config.Hotkey != null) {
+                Key key = (Key) Enum.Parse(typeof(Key), config.Hotkey);
+                HotkeySelector.Text = key.ToString();
+                HotkeySelector.Tag = key;
+                ModkeyAlt.IsChecked = config.ModifierAlt;
+                ModkeyCtrl.IsChecked = config.ModifierControl;
+            }
+            
         }
 
         private void OpenShortcutTab() {
@@ -61,6 +79,35 @@ namespace Launcher
             ShortcutTargetFile.Text = file;
             ShortcutTagetApp.Text = app;
             OpenShortcutTab();
+        }
+
+        private void HotkeySelector_KeyDown(object sender, KeyEventArgs e)
+        {
+            HotkeySelector.Text = e.Key.ToString();
+            HotkeySelector.Tag = e.Key;
+        }
+
+        private void HotkeyApplyer_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(HotkeySelector.Text)) {
+                return;
+            }
+
+            Key key = (Key) HotkeySelector.Tag;
+            bool alt = ModkeyAlt.IsChecked == true;
+            bool ctrl = ModkeyCtrl.IsChecked == true;
+
+
+            var success = Util.RegisterHotkey(mainWindow.Hotkey, key, alt, ctrl);
+            var msg = success ? "register hotkey!" : "fail to register hotkey";
+            HotkeyResisterResult.Content = msg;
+
+            if (success) {
+                AppConfig appConfig = AppConfig.Instance;
+                appConfig.Hotkey = key.ToString();
+                appConfig.ModifierAlt = (bool)ModkeyAlt.IsChecked;
+                appConfig.ModifierControl = (bool)ModkeyCtrl.IsChecked;
+            }
         }
     }
 }

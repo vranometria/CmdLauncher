@@ -8,50 +8,53 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
+using Launcher.Hotkey;
 using Launcher.View;
 using Launcher.Model;
+using System.Collections;
 
 namespace Launcher
 {
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window , FireHotkeyEventWindow
     {
-        private SettingWindow settingWindow = new SettingWindow() { Visibility = Visibility.Hidden };
+        private SettingWindow settingWindow;
 
         private ShortcutData shortcutData = ShortcutData.Instance;
+
+        private AppConfig config = AppConfig.Instance;
+
+        public Window TargetWindow => this;
+
+        public LauncherHotkey Hotkey { get; private set; }
 
         public MainWindow()
         {
             InitializeComponent();
 
-            mock_data();
-        }
+            settingWindow = new SettingWindow(this) { Visibility = Visibility.Hidden };
 
-        private void mock_data()
-        {
-            CandidateItem item;
+            Hotkey = new LauncherHotkey(this);
 
-            item = new CandidateItem() { Keyword = "abondom" };
-            shortcutData.Add(item);
-
-            item = new CandidateItem() { Keyword = "amp" };
-            shortcutData.Add(item);
-
-            item = new CandidateItem() { Keyword = "archer" };
-            shortcutData.Add(item);
-
-            item = new CandidateItem() { Keyword = "banana" };
-            shortcutData.Add(item);
-
+            RegisterHotkey();
         }
 
         private void Keyword_TextChanged(object sender, TextChangedEventArgs e)
         {
             var keyword = Keyword.Text;
             ShowCandidate(keyword);
+        }
+
+        private void RegisterHotkey() {
+            if (string.IsNullOrWhiteSpace(config.Hotkey)) {
+                return;
+            }
+
+            Key key = Util.Parse(config.Hotkey);
+
+            Util.RegisterHotkey(Hotkey, key, config.ModifierAlt, config.ModifierControl);
         }
 
         internal void ShowCandidate(string keyword)
@@ -139,6 +142,17 @@ namespace Launcher
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             shortcutData.Save();
+
+            config.Save();
+
+            Hotkey.Unregister();
+
+            settingWindow.Close();
+        }
+
+        public void ExecuteEvent()
+        {
+            Activate();
         }
     }
 }

@@ -19,6 +19,8 @@ namespace Launcher.View
         public CandidateItemView()
         {
             InitializeComponent();
+
+            IsTabStop = false;
         }
 
         public CandidateItemView(CandidateItem item) : this() {

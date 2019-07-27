@@ -4,21 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Launcher"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
         mc:Ignorable="d"
-        Title="Launcher" SizeToContent="WidthAndHeight" Width="278.4" KeyDown="Window_KeyDown" DragEnter="Window_DragEnter" Drop="Window_Drop" AllowDrop="True" Closing="Window_Closing">
+        Title="Launcher" SizeToContent="WidthAndHeight" KeyDown="Window_KeyDown" DragEnter="Window_DragEnter" Drop="Window_Drop" AllowDrop="True" Closing="Window_Closing" ShowInTaskbar="False">
+
     <Grid>
-        <Grid Margin="0,0,-0.4,0" RenderTransformOrigin="0.5,0.5">
-            <Grid.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-0.026"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Grid.RenderTransform>
-            <TextBox x:Name="Keyword" Margin="0,10,0,0" TextWrapping="Wrap" Text="" TextChanged="Keyword_TextChanged" HorizontalAlignment="Left" Width="261" Height="21" VerticalAlignment="Top" KeyDown="Keyword_KeyDown"/>
-            <Grid x:Name="CandidateViewArea" Margin="10,50,10.6,9.8">
-                <ListBox x:Name="CandidateList" Margin="0,-10,0.6,10.2" IsTabStop="False" />
+        <Grid Margin="0,0,-0.4,0" RenderTransformOrigin="0.5,0.5" AllowDrop="True" >
+            <TextBox x:Name="Keyword" Margin="-2,0,0,0" TextWrapping="Wrap" Text="" TextChanged="Keyword_TextChanged" HorizontalAlignment="Left" Width="150" Height="21" VerticalAlignment="Top" KeyDown="Keyword_KeyDown" Drop="Keyword_Drop" PreviewDragOver="Keyword_PreviewDragOver"/>
+            <Grid x:Name="CandidateViewArea" Margin="10,50,10.6,9.8" Visibility="Collapsed">
+                <ListBox x:Name="CandidateList" Margin="0,-15,0.4,-6" IsTabStop="False">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="IsTabStop" Value="False"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
             </Grid>
         </Grid>
 

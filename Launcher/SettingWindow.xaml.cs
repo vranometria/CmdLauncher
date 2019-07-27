@@ -19,6 +19,8 @@ namespace Launcher
     {
         private ShortcutData shortcutData = ShortcutData.Instance;
 
+        private AppConfig appConfig = AppConfig.Instance;
+
         private MainWindow mainWindow;
 
         public SettingWindow()
@@ -56,6 +58,10 @@ namespace Launcher
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
+            appConfig.Save();
+
+            shortcutData.Save();
+
             Hide();
         }
 
@@ -103,7 +109,6 @@ namespace Launcher
             HotkeyResisterResult.Content = msg;
 
             if (success) {
-                AppConfig appConfig = AppConfig.Instance;
                 appConfig.Hotkey = key.ToString();
                 appConfig.ModifierAlt = (bool)ModkeyAlt.IsChecked;
                 appConfig.ModifierControl = (bool)ModkeyCtrl.IsChecked;

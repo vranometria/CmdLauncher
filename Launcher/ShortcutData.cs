@@ -64,5 +64,19 @@ namespace Launcher
             return ItemViews.Where(x => x.Item.Keyword.StartsWith(key)).ToList();
         }
 
+        public List<CandidateItemView> Match(string key)
+        {
+            return ItemViews.Where(x => x.Item.Keyword == key).ToList();
+        }
+
+        internal void Delete(string key)
+        {
+            var item = Match(key).FirstOrDefault();
+            if (item == null) {
+                return;
+            }
+
+            ItemViews.Remove(item);
+        }
     }
 }

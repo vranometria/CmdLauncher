@@ -25,7 +25,7 @@
                 <Grid Background="#FFE5E5E5">
                     <Grid HorizontalAlignment="Left" Height="39" Margin="10,10,0,0" VerticalAlignment="Top" Width="749">
                         <Label Content="Key" Margin="0,6,720,0" VerticalAlignment="Top"/>
-                        <TextBox Height="23" x:Name="ShortcutKeyword" Margin="33,10,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+                        <TextBox Height="23" x:Name="ShortcutKeyword" Margin="33,10,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" TextChanged="ShortcutKeyword_TextChanged"/>
                     </Grid>
                     <Grid Height="39" Margin="10,54,9.8,0" VerticalAlignment="Top">
                         <Label Content="File" HorizontalAlignment="Left" Margin="0,6,0,0" VerticalAlignment="Top"/>
@@ -39,7 +39,9 @@
                         <Label x:Name="ExistIndicator" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="78" Height="23" RenderTransformOrigin="0.5,0.5"/>
                     </Grid>
                     <Grid Height="42" Margin="10,216,9.8,0" VerticalAlignment="Top">
-                        <Button x:Name="ShortcutAdder" Content="Add" Margin="664,10,10,0" VerticalAlignment="Top" Click="ShortcutAdder_Click" />
+                        <Button x:Name="ShortcutAdder" Content="Add" Margin="573,10,101,0" VerticalAlignment="Top" Click="ShortcutAdder_Click" />
+                        <Button x:Name="DeleteButton" Content="Delete" IsEnabled="False" HorizontalAlignment="Left" Margin="664,10,0,0" VerticalAlignment="Top" Width="75" Click="DeleteButton_Click"/>
+                        <Button x:Name="ShortcutDataShowButton" Content="Launch" IsEnabled="False" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="ShortcutDataShowButton_Click"/>
                     </Grid>
                 </Grid>
             </TabItem>

@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Shapes;
+using Launcher.Model;
 
 namespace Launcher
 {
@@ -75,6 +75,11 @@ namespace Launcher
             var file = ShortcutTargetFile.Text.Trim();
             var app = ShortcutTagetApp.Text.Trim();
 
+            var item = shortcutData.Match(key).FirstOrDefault();
+            if (item != null) {
+                shortcutData.Delete(key);
+            }
+
             shortcutData.Add(key,file,app);
 
             ClearShortcutAddTab();
@@ -85,6 +90,35 @@ namespace Launcher
             ShortcutTargetFile.Text = file;
             ShortcutTagetApp.Text = app;
             OpenShortcutTab();
+        }
+
+        /// <summary>
+        /// ショートカット・キーワードが登録済みではない時
+        /// </summary>
+        private void NoRregisteredShortcut()
+        {
+            DeleteButton.IsEnabled = false;
+            ShortcutDataShowButton.IsEnabled = false;
+            ExistIndicator.Content = null;
+            ShortcutAdder.Content = "Add";
+        }
+
+        /// <summary>
+        /// ショートカット・キーワードが登録済みである時
+        /// </summary>
+        private void ExistReigsterdShortcut() {
+            DeleteButton.IsEnabled = true;
+            ShortcutDataShowButton.IsEnabled = true;
+            ShortcutAdder.Content = "Overwrite";
+            ExistIndicator.Content = "already exist!";
+        }
+
+        private void ClearShortcutTab()
+        {
+            ShortcutKeyword.Text = null;
+            ShortcutTargetFile.Text = null;
+            ShortcutTagetApp.Text = null;
+
         }
 
         private void HotkeySelector_KeyDown(object sender, KeyEventArgs e)
@@ -113,6 +147,36 @@ namespace Launcher
                 appConfig.ModifierAlt = (bool)ModkeyAlt.IsChecked;
                 appConfig.ModifierControl = (bool)ModkeyCtrl.IsChecked;
             }
+        }
+
+        private void ShortcutKeyword_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string key = ShortcutKeyword.Text;
+
+            CandidateItem item = shortcutData.Match(key).FirstOrDefault()?.Item;
+            if (item == null)
+            {
+                NoRregisteredShortcut();
+                return;
+            }
+
+            ExistReigsterdShortcut();
+        }
+
+        private void ShortcutDataShowButton_Click(object sender, RoutedEventArgs e)
+        {
+            string key = ShortcutKeyword.Text;
+            CandidateItem item = shortcutData.Match(key).FirstOrDefault()?.Item;
+
+            ShortcutTargetFile.Text = item.Filepath;
+            ShortcutTagetApp.Text = item.Application;
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            string key = ShortcutKeyword.Text;
+            shortcutData.Delete(key);
+            ClearShortcutAddTab();
         }
     }
 }

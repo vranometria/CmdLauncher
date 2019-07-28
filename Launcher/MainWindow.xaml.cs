@@ -158,6 +158,19 @@ namespace Launcher
             }
         }
 
+        private void Exit() {
+
+            shortcutData.Save();
+
+            config.Save();
+
+            Hotkey.Unregister();
+
+            settingWindow.Close();
+
+            Application.Current.Shutdown();
+        }
+
         private void Window_PreviewDragEnter(object sender, DragEventArgs e)
         {
             e.Effects = DragDropEffects.All;
@@ -174,13 +187,7 @@ namespace Launcher
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            shortcutData.Save();
-
-            config.Save();
-
-            Hotkey.Unregister();
-
-            settingWindow.Close();
+            Exit();
         }
 
         public void ExecuteEvent()
@@ -208,6 +215,11 @@ namespace Launcher
             e.Effects = DragDropEffects.All;
 
             e.Handled = true;
+        }
+
+        private void ExitMenu_Click(object sender, RoutedEventArgs e)
+        {
+            Exit();
         }
     }
 }

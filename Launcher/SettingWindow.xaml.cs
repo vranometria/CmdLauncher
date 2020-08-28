@@ -19,7 +19,7 @@ namespace Launcher
     {
         private ShortcutData shortcutData = ShortcutData.Instance;
 
-        private AppConfig appConfig = AppConfig.Instance;
+        private HotkeyConfig HotkeyConfig = HotkeyConfig.Instance;
 
         private MainWindow mainWindow;
 
@@ -35,7 +35,7 @@ namespace Launcher
         }
 
         private void Init() {
-            AppConfig config = AppConfig.Instance;
+            HotkeyConfig config = HotkeyConfig.Instance;
             if (config.Hotkey != null) {
                 Key key = (Key) Enum.Parse(typeof(Key), config.Hotkey);
                 HotkeySelector.Text = key.ToString();
@@ -58,7 +58,7 @@ namespace Launcher
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            appConfig.Save();
+            HotkeyConfig.Save();
 
             shortcutData.Save();
 
@@ -83,11 +83,19 @@ namespace Launcher
             shortcutData.Add(key,file,app);
 
             ClearShortcutAddTab();
+
+            shortcutData.Save();
         }
 
-        internal void ShowShortcutAddition(string file = null, string app = null)
+        /// <summary>
+        /// ショットカットキー追加画面を表示する
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="app"></param>
+        internal void ShowShortcutAddition(string file = null,string key = null , string app = null)
         {
             ShortcutTargetFile.Text = file;
+            ShortcutKeyword.Text = key;
             ShortcutTagetApp.Text = app;
             OpenShortcutTab();
         }
@@ -143,10 +151,13 @@ namespace Launcher
             HotkeyResisterResult.Content = msg;
 
             if (success) {
-                appConfig.Hotkey = key.ToString();
-                appConfig.ModifierAlt = (bool)ModkeyAlt.IsChecked;
-                appConfig.ModifierControl = (bool)ModkeyCtrl.IsChecked;
+                HotkeyConfig.Hotkey = key.ToString();
+                HotkeyConfig.ModifierAlt = (bool)ModkeyAlt.IsChecked;
+                HotkeyConfig.ModifierControl = (bool)ModkeyCtrl.IsChecked;
+                HotkeyConfig.Save();
             }
+
+            
         }
 
         private void ShortcutKeyword_TextChanged(object sender, TextChangedEventArgs e)

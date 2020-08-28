@@ -56,11 +56,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AppConfig.cs" />
+    <Compile Include="HotkeyConfig.cs" />
     <Compile Include="DynamicJson.cs" />
     <Compile Include="Hotkey\FireHotkeyEventWindow.cs" />
     <Compile Include="Hotkey\LauncherHotkey.cs" />
     <Compile Include="Model\CandidateItem.cs" />
+    <Compile Include="ReservedKey.cs" />
     <Compile Include="SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>
     </Compile>

@@ -8,10 +8,10 @@
         AllowsTransparency="True"
         Background="Transparent"
         mc:Ignorable="d"
-        Title="Launcher" SizeToContent="WidthAndHeight" KeyDown="Window_KeyDown" DragEnter="Window_DragEnter" Drop="Window_Drop" AllowDrop="True" Closing="Window_Closing" ShowInTaskbar="False">
+        Title="Launcher" SizeToContent="WidthAndHeight" KeyDown="Window_KeyDown" DragEnter="Window_DragEnter" Drop="Window_Drop" AllowDrop="True" Closing="Window_Closing" ShowInTaskbar="False" Height="23.279" Width="153.655">
 
     <Grid>
-        <Grid Margin="0,0,-0.4,0" RenderTransformOrigin="0.5,0.5" AllowDrop="True" >
+        <Grid Margin="0,0,-3.4,-2.8" RenderTransformOrigin="0.5,0.5" AllowDrop="True" >
             <TextBox x:Name="Keyword" Background="#FF1C1C1C" Foreground="White" Margin="0,2,-2.4,-0.2" TextWrapping="Wrap" Text="" TextChanged="Keyword_TextChanged" HorizontalAlignment="Left" Width="150" Height="21" VerticalAlignment="Top" KeyDown="Keyword_KeyDown" Drop="Keyword_Drop" PreviewDragOver="Keyword_PreviewDragOver">
                 <TextBox.ContextMenu>
                     <ContextMenu>

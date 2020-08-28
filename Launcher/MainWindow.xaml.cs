@@ -22,7 +22,9 @@ namespace Launcher
 
         private ShortcutData shortcutData = ShortcutData.Instance;
 
-        private AppConfig config = AppConfig.Instance;
+        private HotkeyConfig config = HotkeyConfig.Instance;
+
+        private ReservedKey ReservedKey;
 
         public Window TargetWindow => this;
 
@@ -39,6 +41,8 @@ namespace Launcher
             RegisterHotkey();
 
             Keyword.Focus();
+
+            ReservedKey = new ReservedKey(this);
         }
 
         private void Keyword_TextChanged(object sender, TextChangedEventArgs e)
@@ -102,6 +106,9 @@ namespace Launcher
         }
 
         private void Decide() {
+
+            
+
             if (CandidateList.Items.Count == 0) {
                 Hide();
                 return;
@@ -132,6 +139,14 @@ namespace Launcher
                     break;
 
                 case Key.Enter:
+
+                    var key = Keyword.Text.Trim();
+                    if (ReservedKey.IsMatch(key))
+                    {
+                        ReservedKey.Do(key);
+                        return;
+                    }
+
                     Decide();
                     break;
             }
@@ -159,10 +174,6 @@ namespace Launcher
         }
 
         private void Exit() {
-
-            shortcutData.Save();
-
-            config.Save();
 
             Hotkey.Unregister();
 
@@ -203,7 +214,10 @@ namespace Launcher
         {
             var files = e.Data.GetData(DataFormats.FileDrop) as string[];
 
-            settingWindow.ShowShortcutAddition(file: files[0]);
+            var key = Keyword.Text.Trim();
+
+            settingWindow.ShowShortcutAddition(file: files[0],key:key);
+
             if (settingWindow.Visibility != Visibility.Visible)
             {
                 settingWindow.Visibility = Visibility.Visible;

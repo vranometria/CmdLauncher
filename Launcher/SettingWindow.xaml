@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Launcher"
         mc:Ignorable="d"
-        Title="SettingWindow" Height="450" Width="800">
+        Title="SettingWindow" Height="328.282" Width="574.229">
     <Grid>
         <TabControl x:Name="Tab" Margin="10,10,9.6,48">
-            <TabItem Header="TabItem">
+            <TabItem Header="Hotkey">
                 <Grid Background="#FFE5E5E5">
                     <Grid HorizontalAlignment="Left" Height="103" Margin="24,40,0,0" VerticalAlignment="Top" Width="262">
                         <TextBox x:Name="HotkeySelector" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53" KeyDown="HotkeySelector_KeyDown"/>
@@ -21,10 +21,10 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5">
-                    <Grid HorizontalAlignment="Left" Height="39" Margin="10,10,0,0" VerticalAlignment="Top" Width="749">
-                        <Label Content="Key" Margin="0,6,720,0" VerticalAlignment="Top"/>
+            <TabItem Header="Keyword">
+                <Grid Background="#FFE5E5E5" Margin="0,0,-0.2,-0.4">
+                    <Grid Height="39" Margin="10,10,10.4,0" VerticalAlignment="Top">
+                        <Label Content="Key" Margin="0,6,489.8,0" VerticalAlignment="Top"/>
                         <TextBox Height="23" x:Name="ShortcutKeyword" Margin="33,10,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" TextChanged="ShortcutKeyword_TextChanged"/>
                     </Grid>
                     <Grid Height="39" Margin="10,54,9.8,0" VerticalAlignment="Top">
@@ -35,18 +35,18 @@
                         <Label Content="App" HorizontalAlignment="Left" Margin="0,6,0,0" VerticalAlignment="Top"/>
                         <TextBox Height="23" x:Name="ShortcutTagetApp" Margin="33,10,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
                     </Grid>
-                    <Grid HorizontalAlignment="Left" Height="31" Margin="10,157,0,0" VerticalAlignment="Top" Width="749">
+                    <Grid Height="31" Margin="10,157,10.4,0" VerticalAlignment="Top">
                         <Label x:Name="ExistIndicator" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="78" Height="23" RenderTransformOrigin="0.5,0.5"/>
                     </Grid>
-                    <Grid Height="42" Margin="10,216,9.8,0" VerticalAlignment="Top">
-                        <Button x:Name="ShortcutAdder" Content="Add" Margin="573,10,101,0" VerticalAlignment="Top" Click="ShortcutAdder_Click" />
-                        <Button x:Name="DeleteButton" Content="Delete" IsEnabled="False" HorizontalAlignment="Left" Margin="664,10,0,0" VerticalAlignment="Top" Width="75" Click="DeleteButton_Click"/>
+                    <Grid Margin="10,0,10.4,13.6" Height="42" VerticalAlignment="Bottom">
+                        <Button x:Name="ShortcutAdder" Content="Add" Margin="0,0,101,13" Click="ShortcutAdder_Click" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" />
+                        <Button x:Name="DeleteButton" Content="Delete" IsEnabled="False" Margin="0,0,10,13" Click="DeleteButton_Click" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
                         <Button x:Name="ShortcutDataShowButton" Content="Launch" IsEnabled="False" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="ShortcutDataShowButton_Click"/>
                     </Grid>
                 </Grid>
             </TabItem>
         </TabControl>
-        <Grid Margin="10,377,9.6,10">
+        <Grid Margin="10,0,9.6,10" Height="33" VerticalAlignment="Bottom">
             <Button x:Name="CloseButton" Content="Close" Margin="0,0,0,9" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="CloseButton_Click"/>
         </Grid>
 

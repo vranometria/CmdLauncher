@@ -7,12 +7,12 @@ using Codeplex.Data;
 
 namespace Launcher
 {
-    public class AppConfig
+    public class HotkeyConfig
     {
         private const string DATA_FILE = "config.json";
 
-        private static AppConfig instance;
-        public static AppConfig Instance { get { return instance == null ? (instance = new AppConfig()) : instance; } }
+        private static HotkeyConfig instance;
+        public static HotkeyConfig Instance { get { return instance == null ? (instance = new HotkeyConfig()) : instance; } }
 
         public string Hotkey { get; set; }
 
@@ -20,7 +20,7 @@ namespace Launcher
 
         public bool ModifierControl { get; set; }
 
-        private AppConfig() {
+        private HotkeyConfig() {
             if (File.Exists(DATA_FILE)) {
                 Load();
             }

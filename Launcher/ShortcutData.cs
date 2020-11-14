@@ -29,13 +29,19 @@ namespace Launcher
                 {
                     writer.WriteLine("{\"data\":[]}");
                 }
+                return;
             }
 
-            using (StreamReader reader = new StreamReader(DATA_FILE)) {
-                string s = reader.ReadToEnd();
-                var obj = DynamicJson.Parse(s);
-                ItemViews = Util.ConvertData(obj);
+            var json = Util.ReadJsonFile(DATA_FILE, Encoding.UTF8);
+
+            if (json == null)
+            {
+                ItemViews = new List<CandidateItemView>();
+                return;
             }
+
+            ItemViews = Util.ConvertData(json);
+
         }
 
         public void Save() {

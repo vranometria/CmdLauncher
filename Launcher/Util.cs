@@ -1,17 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Diagnostics;
 using Launcher.Model;
 using Launcher.View;
 using System.Windows.Input;
+using Codeplex.Data;
+
 using Launcher.Hotkey;
 
 namespace Launcher
 {
     public static class Util
     {
+
+        public static string ReadFileToEnd(string filepath, Encoding encoding)
+        {
+            using (var reader = new StreamReader(filepath, encoding))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+
+        public static dynamic ReadJsonFile(string filepath, Encoding encoding)
+        {
+            var s = ReadFileToEnd(filepath, encoding);
+
+            if(string.IsNullOrEmpty(s))
+            {
+                return null;
+            }
+
+            return DynamicJson.Parse(s);
+        }
+            
         public static Process Execute(string file = null, string app = null) {
 
             int code = 0;

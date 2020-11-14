@@ -18,13 +18,13 @@ namespace Launcher
     /// </summary>
     public partial class MainWindow : Window , FireHotkeyEventWindow
     {
-        private SettingWindow settingWindow;
+        private SettingWindow SettingWindow;
 
-        private ShortcutData shortcutData = ShortcutData.Instance;
+        private ShortcutData ShortcutData { get; set; } = ShortcutData.Instance;
 
-        private HotkeyConfig config = HotkeyConfig.Instance;
+        private HotkeyConfig Config { get; set; } = HotkeyConfig.Instance;
 
-        private ReservedKey ReservedKey;
+        private ReservedKey ReservedKey { get; set; }
 
         public Window TargetWindow => this;
 
@@ -34,7 +34,7 @@ namespace Launcher
         {
             InitializeComponent();
 
-            settingWindow = new SettingWindow(this) { Visibility = Visibility.Hidden };
+            SettingWindow = new SettingWindow(this) { Visibility = Visibility.Hidden };
 
             Hotkey = new LauncherHotkey(this);
 
@@ -52,20 +52,24 @@ namespace Launcher
         }
 
         private void RegisterHotkey() {
-            if (string.IsNullOrWhiteSpace(config.Hotkey)) {
+            if (string.IsNullOrWhiteSpace(Config.Hotkey)) {
                 return;
             }
 
-            Key key = Util.Parse(config.Hotkey);
+            Key key = Util.Parse(Config.Hotkey);
 
-            var failed = !Util.RegisterHotkey(Hotkey, key, config.ModifierAlt, config.ModifierControl);
+            var failed = !Util.RegisterHotkey(Hotkey, key, Config.ModifierAlt, Config.ModifierControl);
 
             if (failed) {
                 Keyword.Text = "failed to register hotkey";
             }
         }
 
-        private void Close() {
+        /// <summary>
+        /// アプリを不可視にする
+        /// </summary>
+        private void Invisible()
+        {
             Visibility = Visibility.Hidden;
             Keyword.Text = null;
         }
@@ -80,7 +84,7 @@ namespace Launcher
                 return;
             }
 
-            shortcutData.StartWith(keyword).ForEach(x => CandidateList.Items.Add(x));
+            ShortcutData.StartWith(keyword).ForEach(x => CandidateList.Items.Add(x));
 
             if (CandidateList.Items.Count == 0)
             {
@@ -124,7 +128,7 @@ namespace Launcher
 
             Util.Execute(view.Item.Filepath,view.Item.Application);
 
-            Close();
+            Invisible();
         }
 
         private void Keyword_KeyDown(object sender, KeyEventArgs e)
@@ -132,9 +136,9 @@ namespace Launcher
             switch (e.Key) {
 
                 case Key.F1:
-                    if (settingWindow.Visibility != Visibility.Visible)
+                    if (SettingWindow.Visibility != Visibility.Visible)
                     {
-                        settingWindow.Visibility = Visibility.Visible;
+                        SettingWindow.Visibility = Visibility.Visible;
                     }
                     break;
 
@@ -157,13 +161,13 @@ namespace Launcher
             switch (e.Key)
             {
                 case Key.F1:
-                    if (settingWindow.Visibility != Visibility.Visible) {
-                        settingWindow.Visibility = Visibility.Visible;
+                    if (SettingWindow.Visibility != Visibility.Visible) {
+                        SettingWindow.Visibility = Visibility.Visible;
                     }
                     break;
 
                 case Key.Escape:
-                    Close();
+                    Invisible();
                     break;
 
                 case Key.Tab:
@@ -177,7 +181,7 @@ namespace Launcher
 
             Hotkey.Unregister();
 
-            settingWindow.Close();
+            SettingWindow.Close();
 
             Application.Current.Shutdown();
         }
@@ -216,11 +220,11 @@ namespace Launcher
 
             var key = Keyword.Text.Trim();
 
-            settingWindow.ShowShortcutAddition(file: files[0],key:key);
+            SettingWindow.ShowShortcutAddition(file: files[0],key:key);
 
-            if (settingWindow.Visibility != Visibility.Visible)
+            if (SettingWindow.Visibility != Visibility.Visible)
             {
-                settingWindow.Visibility = Visibility.Visible;
+                SettingWindow.Visibility = Visibility.Visible;
             }
         }
 

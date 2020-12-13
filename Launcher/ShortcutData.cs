@@ -67,7 +67,14 @@ namespace Launcher
         }
 
         public List<CandidateItemView> StartWith(string key) {
-            return ItemViews.Where(x => x.Item.Keyword.StartsWith(key)).ToList();
+
+            List<CandidateItemView> items = ItemViews.Where(x => x.Item.Keyword.Trim() == key).ToList();
+
+            var subs = ItemViews.Where(x => x.Item.Keyword.StartsWith(key) && x.Item.Keyword != key ).ToList();
+
+            items.AddRange(subs);
+
+            return items;
         }
 
         public List<CandidateItemView> Match(string key)

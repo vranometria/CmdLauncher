@@ -15,7 +15,6 @@ namespace Launcher
 {
     public static class Util
     {
-
         public static string ReadFileToEnd(string filepath, Encoding encoding)
         {
             using (var reader = new StreamReader(filepath, encoding))
@@ -54,18 +53,46 @@ namespace Launcher
             switch (code) {
 
                 case 1:
+                    if (IsNotExist(file: file)) { return null; }
                     return Process.Start(f);
 
                 case 2:
+                    if (IsNotExist(app: app)) { return null; }
                     return Process.Start(a);
 
                 case 3:
+                    if (IsNotExist(file: file, app: app)) { return null; }
                     return Process.Start(a, f);
 
             }
 
             throw new Exception();
+        }
 
+        public static bool IsNotExist(string file = null , string app = null )
+        {
+            if (file != null)
+            { 
+                if (File.Exists(file))
+                {
+                    return false;
+                }
+
+                if (Directory.Exists(file))
+                {
+                    return false;
+                }
+            }
+
+            if (app != null)
+            {
+                if (File.Exists(file))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         public static List<CandidateItemView> ConvertData(dynamic readData) {

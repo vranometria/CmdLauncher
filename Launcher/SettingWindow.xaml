@@ -27,13 +27,13 @@
                         <Label Content="Key" Margin="0,6,489.8,0" VerticalAlignment="Top"/>
                         <TextBox Height="23" x:Name="ShortcutKeyword" Margin="33,10,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" TextChanged="ShortcutKeyword_TextChanged"/>
                     </Grid>
-                    <Grid Height="39" Margin="10,54,9.8,0" VerticalAlignment="Top">
+                    <Grid Height="39" Margin="10,54,9.8,0" VerticalAlignment="Top" AllowDrop="True">
                         <Label Content="File" HorizontalAlignment="Left" Margin="0,6,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="ShortcutTargetFile" Height="23" Margin="33,10,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+                        <TextBox x:Name="ShortcutTargetFile" Height="23" Margin="33,10,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Drop="ForFileDrop_Drop" PreviewDragOver="ForFileDrop_PreviewDragOver"/>
                     </Grid>
                     <Grid Height="39" Margin="10,98,9.8,0" VerticalAlignment="Top">
                         <Label Content="App" HorizontalAlignment="Left" Margin="0,6,0,0" VerticalAlignment="Top"/>
-                        <TextBox Height="23" x:Name="ShortcutTagetApp" Margin="33,10,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+                        <TextBox Height="23" x:Name="ShortcutTagetApp" Margin="33,10,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" PreviewDragOver="ForFileDrop_PreviewDragOver" Drop="ForFileDrop_Drop"/>
                     </Grid>
                     <Grid Height="31" Margin="10,157,10.4,0" VerticalAlignment="Top">
                         <Label x:Name="ExistIndicator" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="78" Height="23" RenderTransformOrigin="0.5,0.5"/>

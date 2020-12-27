@@ -94,8 +94,8 @@ namespace Launcher
         /// <param name="app"></param>
         internal void ShowShortcutAddition(string file = null,string key = null , string app = null)
         {
-            ShortcutTargetFile.Text = file;
             ShortcutKeyword.Text = key;
+            ShortcutTargetFile.Text = file;
             ShortcutTagetApp.Text = app;
             OpenShortcutTab();
         }
@@ -188,6 +188,21 @@ namespace Launcher
             string key = ShortcutKeyword.Text;
             shortcutData.Delete(key);
             ClearShortcutAddTab();
+        }
+
+
+        private void ForFileDrop_PreviewDragOver(object sender, DragEventArgs e)
+        {
+            e.Effects = DragDropEffects.All;
+            e.Handled = true;
+        }
+
+        private void ForFileDrop_Drop(object sender, DragEventArgs e)
+        {
+            var file = ( e.Data.GetData(DataFormats.FileDrop) as string[] ).First();
+
+            (sender as TextBox).Text = file;
+
         }
     }
 }

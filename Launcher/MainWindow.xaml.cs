@@ -133,18 +133,15 @@ namespace Launcher
 
         private void Keyword_KeyDown(object sender, KeyEventArgs e)
         {
+            var key = Keyword.Text.Trim();
             switch (e.Key) {
 
                 case Key.F1:
-                    if (SettingWindow.Visibility != Visibility.Visible)
-                    {
-                        SettingWindow.Visibility = Visibility.Visible;
-                    }
+                    ShowSetting(key: key);
                     break;
 
                 case Key.Enter:
 
-                    var key = Keyword.Text.Trim();
                     if (ReservedKey.IsMatch(key))
                     {
                         ReservedKey.Do(key);
@@ -156,26 +153,7 @@ namespace Launcher
             }
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.Key)
-            {
-                case Key.F1:
-                    if (SettingWindow.Visibility != Visibility.Visible) {
-                        SettingWindow.Visibility = Visibility.Visible;
-                    }
-                    break;
-
-                case Key.Escape:
-                    Invisible();
-                    break;
-
-                case Key.Tab:
-                    SelectNextCandidate();
-                    break;
-
-            }
-        }
+        
 
         private void Exit() {
 
@@ -186,6 +164,18 @@ namespace Launcher
             Application.Current.Shutdown();
         }
 
+        private void ShowSetting(string file=null ,string key = null)
+        {
+            if (SettingWindow == null)
+            { 
+                SettingWindow = new SettingWindow(this);
+            }
+
+            SettingWindow.ShowShortcutAddition(file: file, key: key);
+
+            SettingWindow.Visibility = Visibility.Visible;
+        }
+
         private void Window_PreviewDragEnter(object sender, DragEventArgs e)
         {
             e.Effects = DragDropEffects.All;
@@ -194,10 +184,6 @@ namespace Launcher
         private void Window_DragEnter(object sender, DragEventArgs e)
         {
             e.Effects = DragDropEffects.All;
-        }
-
-        private void Window_Drop(object sender, DragEventArgs e)
-        {
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -216,15 +202,12 @@ namespace Launcher
 
         private void Keyword_Drop(object sender, DragEventArgs e)
         {
-            var files = e.Data.GetData(DataFormats.FileDrop) as string[];
-
+            var file = (e.Data.GetData(DataFormats.FileDrop) as string[]).First().Trim();
             var key = Keyword.Text.Trim();
-
-            SettingWindow.ShowShortcutAddition(file: files[0],key:key);
 
             if (SettingWindow.Visibility != Visibility.Visible)
             {
-                SettingWindow.Visibility = Visibility.Visible;
+                ShowSetting(file: file ,key: key);
             }
         }
 
@@ -238,6 +221,21 @@ namespace Launcher
         private void ExitMenu_Click(object sender, RoutedEventArgs e)
         {
             Exit();
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Escape:
+                    Invisible();
+                    break;
+
+                case Key.Tab:
+                    SelectNextCandidate();
+                    break;
+
+            }
         }
     }
 }

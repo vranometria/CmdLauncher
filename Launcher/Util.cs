@@ -50,6 +50,8 @@ namespace Launcher
             var f = $"\"{file.Replace("\"","")}\"";
             var a = $"\"{app.Replace("\"", "")}\"";
 
+            string workingDir;
+            ProcessStartInfo p;
             switch (code) {
 
                 case 1:
@@ -58,11 +60,17 @@ namespace Launcher
 
                 case 2:
                     if (IsNotExist(app: app)) { return null; }
-                    return Process.Start(a);
+
+                    workingDir = Path.GetDirectoryName(app);
+                    p = new ProcessStartInfo(app) { WorkingDirectory = workingDir };
+                    return Process.Start(p);
 
                 case 3:
                     if (IsNotExist(file: file, app: app)) { return null; }
-                    return Process.Start(a, f);
+
+                    workingDir = Path.GetDirectoryName(app);
+                    p = new ProcessStartInfo(a, f);
+                    return Process.Start(p);
 
             }
 
@@ -86,7 +94,7 @@ namespace Launcher
 
             if (app != null)
             {
-                if (File.Exists(file))
+                if (File.Exists(app))
                 {
                     return false;
                 }

@@ -110,17 +110,14 @@ namespace Launcher
         }
 
         private void Decide() {
-
-            
-
             if (CandidateList.Items.Count == 0) {
                 Hide();
                 return;
             }
 
-            var view = CandidateList.SelectedItem as CandidateItemView;
 
-            if (view == null) {
+            if (!(CandidateList.SelectedItem is CandidateItemView view))
+            {
                 Hide();
                 return;
             }
